@@ -4,6 +4,8 @@ plugins {
 	id 'java'
 	id 'idea'
 	id "org.owasp.dependencycheck" version "5.3.2.1"
+	id "com.github.spotbugs" version "4.4.4"
+	id "org.sonarqube" version "3.0"
 }
 
 group = 'tw'
@@ -16,8 +18,21 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.10.1'
 }
 
 test {
 	useJUnitPlatform()
 }
+
+spotbugs {
+	//the version of SpotBugs you want to use
+	toolVersion = "4.0.6"
+
+	ignoreFailures = false
+	effort = 'max'
+	showProgress = true
+	reportsDir = file("$buildDir/spotbugs")
+
+}
+
